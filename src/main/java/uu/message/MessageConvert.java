@@ -40,9 +40,9 @@ public class MessageConvert {
         return this;
     }
 
-    public List<Map.Entry<String, Map<String, String>>> toList(String s, String root) {
-        if (root == null) {
-            root = workDirectory;
+    public List<Map.Entry<String, Map<String, String>>> toList(String s, String workDirectory, boolean fileConvertToBase64) {
+        if (workDirectory == null) {
+            workDirectory = this.workDirectory;
         }
         List<Map.Entry<String, Map<String, String>>> list = new ArrayList<>();
         boolean spaceValue = false; // uu码 value 部分 是否是
@@ -84,11 +84,11 @@ public class MessageConvert {
 
                                 // 处理别名
                                 if (path.startsWith("@/") || path.startsWith("@\\")) {
-                                    path = root + path.substring(1);
+                                    path = workDirectory + path.substring(1);
                                 }
                                 // 不是绝对路径, 补全成绝对路径
                                 if (!isAbsolutePath(path)) {
-                                    path = root + file;
+                                    path = workDirectory + file;
                                 }
                                 // 把 /.././ 等处理成绝对路径 不支持
                                 if (fileConvertToBase64) {
@@ -155,7 +155,15 @@ public class MessageConvert {
     }
 
     public List<Map.Entry<String, Map<String, String>>> toList(String s) {
-        return toList(s, null);
+        return toList(s, null, this.fileConvertToBase64);
+    }
+
+    public List<Map.Entry<String, Map<String, String>>> toList(String s, String workDirectory) {
+        return toList(s, workDirectory, this.fileConvertToBase64);
+    }
+
+    public List<Map.Entry<String, Map<String, String>>> toList(String s, boolean fileConvertToBase64) {
+        return toList(s, null, fileConvertToBase64);
     }
 
     public String toText(List<Map.Entry<String, Map<String, String>>> list) {
@@ -182,7 +190,7 @@ public class MessageConvert {
         return sb.toString();
     }
 
-    public Map.Entry<String, Map<String, String>> parseCode(String s) {
+    private Map.Entry<String, Map<String, String>> parseCode(String s) {
         Map<String, String> map = new LinkedHashMap<>();
         StringBuilder name = new StringBuilder();
         int nameIndex = 0;
