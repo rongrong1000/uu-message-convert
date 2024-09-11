@@ -10,20 +10,19 @@
 由 <> 包裹
 
 ### 图片码
-<image file="http://demo-image.com">
-<image file="file:///c:\\demo.png">
+`<image file="http://demo-image.com">`
+`<image file="file:///c:\\demo.png">`
   
 #### 拓展  
 使用前提需要指定当前目录
 
-<image file="./demo.png">
+`<image file="./demo.png">`
 
 #### 别名
 使用前提需要指定工作目录
-<image file="@/demo.png">
+`<image file="@/demo.png">`
 
 ### 图文
-
-hi <image file="http://demo-image.com">
+`hi <image file="http://demo-image.com">`
 
 ## 数组
